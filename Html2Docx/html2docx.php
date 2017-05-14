@@ -5,7 +5,7 @@ namespace Naifu\Html2docx;
 class Html2docx {
 	
     public $pandoc_parameter = ' -s -S ';
-	public $allowed_mime_types = array(
+    public $allowed_mime_types = array(
 		'text/plain',
         'text/html',
         'text/html',
@@ -14,7 +14,7 @@ class Html2docx {
         'application/javascript',
         'application/xml'
     );
-	public $pandoc_path = '';
+    public $pandoc_path = '';
     public $output_dir = '';
     public $output_file = '';
     public $html_file = '';
@@ -50,7 +50,7 @@ class Html2docx {
 		if(!is_dir($path_info['dirname'])){die('Output directroy is not valid');}
 		$this->output_file = $output_file;
 		$this->output_dir = $path_info['dirname'];
- 	}
+	}
 
 	public function input_html_file($input_file){
 
@@ -67,8 +67,8 @@ class Html2docx {
 		$input_content = $this->clean_script($input_content);
 		$input_content = $this->clean_style($input_content);
 		$input_content = $this->clean_encoding($input_content);
-        // $input_content = $this->image_process($input_content);
-        // $input_content = $this->math_process($input_content);
+	// $input_content = $this->image_process($input_content);
+	// $input_content = $this->math_process($input_content);
 
 		$this->html_content = $input_content;
 	}
@@ -80,12 +80,12 @@ class Html2docx {
 		if(!$this->pandoc_path){die('Need to tell me where is the pandoc.');}
 		if(!$this->output_file){die('Need to tell me where should I put the outputfile.');}
 		if(!$this->html_file){die('Need to tell me where is the input file.');}
-	
+
 		$content = file_get_contents($this->html_file);
 
 		$output = $this->convert_from_html($content);
 		if($delete_input){unlink($this->html_file);}
-        return $output;
+	return $output;
 	}
 
 	public function convert_from_html($content=null){
@@ -100,11 +100,11 @@ class Html2docx {
 
 		$input = $html_input;
 		$output = $this->output_file;
-        chdir(pathinfo($this->pandoc_path,PATHINFO_DIRNAME));
+	chdir(pathinfo($this->pandoc_path,PATHINFO_DIRNAME));
 		$cmd = basename($this->pandoc_path) . $this->pandoc_parameter . " -o $output " . " $input";
 		// echo $cmd;
 		exec($cmd);
-        unlink($input);
+	unlink($input);
 		return $output;
 
 	}
@@ -142,10 +142,10 @@ class Html2docx {
 		// 	foreach($matches[0] as $key=>$value){
 		// 		//match 'http:\\'
 		// 		if(preg_match('/http[^\"\']*/',$value,$match)){$path = $match[0];}
-				
+
 		// 		//match '\\'
 		// 		elseif(preg_match('/\/\/[^\"\']*/',$value,$match)){$path = 'http:' . $match[0];}
-				
+
 		// 		//match '\'
 		// 		elseif(preg_match('/\/[^\"\']*/',$value,$match)){$path = $_SERVER['DOCUMENT_ROOT'] . $match[0];}
 		// 		else{$path = NULL;}
@@ -200,7 +200,7 @@ class Html2docx {
 		// unlink($output_mathml);
 
 		// return $result;
-	
+
 	}
 
 
